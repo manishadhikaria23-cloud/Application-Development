@@ -1,0 +1,598 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\abish\\source\\repos\\c#_Project\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\wwwroot\\css\\bootstrap\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\wwwroot\\css\\bootstrap\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\utilities\\hashinghelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\utilities\\hashinghelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\utilities\\datehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\utilities\\datehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\utilities\\markdownhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\utilities\\markdownhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\securityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\securityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\isecurityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\isecurityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\pdfexportservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\pdfexportservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\iexportservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\iexportservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\analyticsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\analyticsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\ianalyticsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\ianalyticsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\journalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\journalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\services\\ijournalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\services\\ijournalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\models\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\models\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\models\\entrytag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\models\\entrytag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\models\\mood.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\models\\mood.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\models\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\models\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\shared\\toast.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\shared\\toast.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\shared\\pager.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\shared\\pager.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\shared\\confirmdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\shared\\confirmdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\shared\\categorypicker.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\shared\\categorypicker.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\shared\\tagpicker.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\shared\\tagpicker.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\shared\\moodpicker.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\shared\\moodpicker.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\lockscreen.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\lockscreen.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\settings.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\settings.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\exportpdf.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\exportpdf.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\searchfilter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\searchfilter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\entrydetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\entrydetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\entryeditor.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\entryeditor.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\timeline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\timeline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|c:\\users\\abish\\source\\repos\\c#_project\\c#_project\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0C0C759-BCF0-4165-A566-D68D477BC743}|c#_Project\\c#_Project.csproj|solutionrelative:c#_project\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "c#_Project\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\wwwroot\\index.html",
+              "RelativeToolTip": "c#_Project\\wwwroot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-01-06T09:37:46.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "bootstrap.min.css",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+              "RelativeDocumentMoniker": "c#_Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+              "RelativeToolTip": "c#_Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-01-06T09:37:40.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HashingHelper.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Utilities\\HashingHelper.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Utilities\\HashingHelper.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Utilities\\HashingHelper.cs",
+              "RelativeToolTip": "c#_Project\\Utilities\\HashingHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:34:33.485Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DateHelper.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Utilities\\DateHelper.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Utilities\\DateHelper.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Utilities\\DateHelper.cs",
+              "RelativeToolTip": "c#_Project\\Utilities\\DateHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:34:22.136Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MarkdownHelper.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Utilities\\MarkdownHelper.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Utilities\\MarkdownHelper.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Utilities\\MarkdownHelper.cs",
+              "RelativeToolTip": "c#_Project\\Utilities\\MarkdownHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:34:07.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SecurityService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\SecurityService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\SecurityService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\SecurityService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\SecurityService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:33:27.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ISecurityService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\ISecurityService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\ISecurityService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\ISecurityService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\ISecurityService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:33:17.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PdfExportService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\PdfExportService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\PdfExportService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\PdfExportService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\PdfExportService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:32:39.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IExportService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\IExportService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\IExportService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\IExportService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\IExportService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:32:27.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AnalyticsService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\AnalyticsService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\AnalyticsService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\AnalyticsService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\AnalyticsService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:32:16.235Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IAnalyticsService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\IAnalyticsService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\IAnalyticsService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\IAnalyticsService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\IAnalyticsService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:32:06.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "JournalService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\JournalService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\JournalService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\JournalService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\JournalService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:31:55.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IJournalService.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\IJournalService.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Services\\IJournalService.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Services\\IJournalService.cs",
+              "RelativeToolTip": "c#_Project\\Services\\IJournalService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:31:44.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AppSettings.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\AppSettings.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Models\\AppSettings.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\AppSettings.cs",
+              "RelativeToolTip": "c#_Project\\Models\\AppSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:30:15.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "EntryTag.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\EntryTag.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Models\\EntryTag.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\EntryTag.cs",
+              "RelativeToolTip": "c#_Project\\Models\\EntryTag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:30:02.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Models\\Category.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\Category.cs",
+              "RelativeToolTip": "c#_Project\\Models\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:29:50.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Tag.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\Tag.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Models\\Tag.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\Tag.cs",
+              "RelativeToolTip": "c#_Project\\Models\\Tag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:29:40.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Mood.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\Mood.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Models\\Mood.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\Mood.cs",
+              "RelativeToolTip": "c#_Project\\Models\\Mood.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:29:29.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "JournalEntry.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\JournalEntry.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Models\\JournalEntry.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Models\\JournalEntry.cs",
+              "RelativeToolTip": "c#_Project\\Models\\JournalEntry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:29:19.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "c#_Project\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "c#_Project\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T09:28:35.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Toast.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\Toast.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Shared\\Toast.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\Toast.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Shared\\Toast.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:27:49.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Pager.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\Pager.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Shared\\Pager.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\Pager.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Shared\\Pager.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:27:39.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ConfirmDialog.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\ConfirmDialog.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Shared\\ConfirmDialog.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\ConfirmDialog.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Shared\\ConfirmDialog.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:27:29.542Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "CategoryPicker.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\CategoryPicker.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Shared\\CategoryPicker.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\CategoryPicker.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Shared\\CategoryPicker.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:27:20.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TagPicker.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\TagPicker.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Shared\\TagPicker.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\TagPicker.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Shared\\TagPicker.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:27:10.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "MoodPicker.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\MoodPicker.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Shared\\MoodPicker.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Shared\\MoodPicker.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Shared\\MoodPicker.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:26:58.227Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "LockScreen.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\LockScreen.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\LockScreen.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\LockScreen.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\LockScreen.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:26:28.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Settings.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\Settings.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\Settings.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\Settings.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\Settings.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:26:17.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ExportPdf.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\ExportPdf.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\ExportPdf.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\ExportPdf.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\ExportPdf.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:26:07.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "SearchFilter.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\SearchFilter.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\SearchFilter.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\SearchFilter.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\SearchFilter.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:25:56.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "EntryDetails.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\EntryDetails.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\EntryDetails.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\EntryDetails.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\EntryDetails.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:25:46.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "EntryEditor.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\EntryEditor.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\EntryEditor.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\EntryEditor.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\EntryEditor.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:25:38.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "Timeline.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\Timeline.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\Timeline.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\Timeline.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\Timeline.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:25:27.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "c#_Project\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\abish\\source\\repos\\c#_Project\\c#_Project\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "c#_Project\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T09:14:53.241Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

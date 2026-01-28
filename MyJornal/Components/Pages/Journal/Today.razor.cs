@@ -194,7 +194,7 @@ namespace JournalApp.Components.Pages.Journal
                 Message = "You can select up to 2 secondary moods only.";
                 IsSaving = false;
                 return;
-            }
+            }    
 
             Model.SecondaryMoods = string.Join(", ", SecondaryMoodSet);
 
