@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyJornal</title>
+    <link href="css/app.css" rel="stylesheet" />
+    <base href="./" />
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        window.setTheme = (theme) => {
+            localStorage.setItem('theme', theme);
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+    </script>
+</head>
+<body>
+    <div id="app">Loading...</div>
+
+    <script src="_framework/blazor.webview.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/richEditor.js"></script>
+</body>
+</html>

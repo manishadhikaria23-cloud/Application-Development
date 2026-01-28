@@ -1,0 +1,79 @@
+﻿@page "/"
+@inject NavigationManager Nav
+
+<style>
+    .splash {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(900px 500px at 20% 10%, rgba(37,99,235,.15), transparent), radial-gradient(900px 500px at 80% 20%, rgba(6,182,212,.15), transparent), #f5f8ff;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        color: #0f172a;
+    }
+
+    .card {
+        background: rgba(255,255,255,.95);
+        border-radius: 22px;
+        padding: 28px 32px;
+        border: 1px solid rgba(15,23,42,.10);
+        box-shadow: 0 20px 60px rgba(2,6,23,.12);
+        text-align: center;
+        min-width: 280px;
+    }
+
+    .logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #2563eb, #06b6d4);
+        display: grid;
+        place-items: center;
+        margin: 0 auto 14px;
+        color: white;
+        font-size: 28px;
+        box-shadow: 0 18px 44px rgba(37,99,235,.30);
+    }
+
+    .title {
+        font-size: 1.3rem;
+        font-weight: 950;
+        margin: 0;
+    }
+
+    .sub {
+        margin-top: 6px;
+        font-size: .9rem;
+        color: #64748b;
+        font-weight: 600;
+    }
+
+    .loader {
+        margin: 18px auto 0;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 4px solid rgba(37,99,235,.20);
+        border-top-color: #2563eb;
+        animation: spin 1s linear infinite;
+    }
+
+    
+   
+</style>
+
+<div class="splash">
+    <div class="card">
+        <div class="logo">📔</div>
+        <h1 class="title">MyJournal</h1>
+        <div class="sub">Securing your journal…</div>
+        <div class="loader"></div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Nav.NavigateTo("/lock", true);
+    }
+}

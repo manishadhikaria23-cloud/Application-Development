@@ -1,0 +1,247 @@
+﻿@page "/entries"
+@namespace JournalApp.Components.Pages.Journal
+
+<style>
+    :root {
+        --bg-light: #f0f9ff;
+        --glass-white: rgba(255, 255, 255, 0.85);
+        --accent-blue: #0ea5e9;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+    }
+
+    .entries-container {
+        min-height: 100vh;
+        background-color: var(--bg-light);
+        background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+        padding: 40px 20px;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Main Content Box */
+    .outer-layout {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: var(--glass-white);
+        backdrop-filter: blur(10px);
+        border: 1px solid white;
+        border-radius: 30px;
+        padding: 40px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 35px;
+    }
+
+        .header-section h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+    /* Filter Grid - Fixed Overlapping */
+    .filter-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 2fr auto;
+        gap: 20px;
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        margin-bottom: 40px;
+        align-items: flex-end;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .label-text {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--accent-blue);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .ui-input {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 12px;
+        border-radius: 12px;
+        outline: none;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+    }
+
+        .ui-input:focus {
+            border-color: var(--accent-blue);
+            background: white;
+        }
+
+    /* Cards Grid */
+    .entries-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .entry-card {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        border: 1px solid #f1f5f9;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .entry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+    .card-date {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 10px 0;
+        color: var(--text-dark);
+    }
+
+    .mood-tag {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        background: #e0f2fe;
+        color: var(--accent-blue);
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    .tag-item {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        background: #f1f5f9;
+        padding: 2px 8px;
+        border-radius: 5px;
+    }
+
+    /* Pagination */
+    .pagination-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    .nav-button {
+        background: white;
+        border: 1px solid #e2e8f0;
+        padding: 10px 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+        .nav-button:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+</style>
+
+<div class="entries-container">
+    <div class="outer-layout">
+        <div class="header-section">
+            <div>
+                <h1>My Journal</h1>
+                <p style="color:var(--text-muted)">Browsing @AllEntries.Count memories</p>
+            </div>
+            <div style="color: var(--accent-blue); font-weight: 700;">
+                Page @CurrentPage / @TotalPages
+            </div>
+        </div>
+
+        <div class="filter-grid">
+            <div class="field-group">
+                <span class="label-text">Find Anything</span>
+                <input class="ui-input" type="text" placeholder="Keywords..." value="@SearchText" @oninput="OnSearchChanged" />
+            </div>
+            <div class="field-group">
+                <span class="label-text">Mood</span>
+                <select class="ui-input" @bind="MoodFilter" @bind:after="ApplyFilters">
+                    <option value="">All Moods</option>
+                    @foreach (var mood in Enum.GetValues(typeof(JournalApp.Models.Enums.MoodType)))
+                    {
+                        <option value="@mood">@mood</option>
+                    }
+                </select>
+            </div>
+            <div class="field-group">
+                <span class="label-text">Timeline</span>
+                <div style="display:flex; gap:10px;">
+                    <input class="ui-input" type="date" @bind="FromDate" @bind:after="ApplyFilters" style="flex:1" />
+                    <input class="ui-input" type="date" @bind="ToDate" @bind:after="ApplyFilters" style="flex:1" />
+                </div>
+            </div>
+            <button class="ui-input" style="background:#fee2e2; color:#ef4444; border:none; cursor:pointer;" @onclick="ClearFilters">
+                🧹
+            </button>
+        </div>
+
+        @if (PageEntries.Count == 0)
+        {
+            <div style="text-align:center; padding:60px; color:var(--text-muted)">
+                <h3>No entries found.</h3>
+            </div>
+        }
+        else
+        {
+            <div class="entries-grid">
+                @foreach (var entry in PageEntries)
+                {
+                    <!-- navigate to ViewEntry route (expects a Date param) -->
+                    <div class="entry-card" @onclick='() => Nav.NavigateTo($"/view/{entry.EntryDate:yyyy-MM-dd}")'>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span class="card-date">@entry.EntryDate.ToString("MMM dd, yyyy")</span>
+                            <span class="mood-tag">@GetMoodEmoji(entry.PrimaryMood) @entry.PrimaryMood</span>
+                        </div>
+                        <h2 class="card-title">@entry.Title</h2>
+                        <div class="tag-container">
+                            @if (!string.IsNullOrEmpty(entry.Tags))
+                            {
+                                @foreach (var tag in entry.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                {
+                                    <span class="tag-item">#@tag.Trim()</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="pagination-footer">
+                <button class="nav-button" @onclick="PrevPage" disabled="@(CurrentPage <= 1)">← Older</button>
+                <button class="nav-button" style="background:var(--accent-blue); color:white; border:none;" @onclick="NextPage" disabled="@(CurrentPage >= TotalPages)">Newer →</button>
+            </div>
+        }
+    </div>
+</div>

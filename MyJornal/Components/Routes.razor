@@ -1,0 +1,28 @@
+﻿@using JournalApp.Components.Layout
+@using JournalApp.Components.Pages.Auth
+@using Microsoft.AspNetCore.Components.Routing
+@inject JournalApp.Services.Implementations.SessionService Session
+@inject NavigationManager Nav
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        @if (!Session.IsUnlocked)
+        {
+            // App locked: always show the Lock component (full screen).
+            // Pass the originally requested URI so Lock can navigate back after unlock.
+            <Lock RequestedUri="@Nav.Uri" />
+        }
+        else
+        {
+            // Unlocked: render the requested route with the normal layout.
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        }
+    </Found>
+
+    <NotFound>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p style="padding:16px;">Sorry, nothing was found.</p>
+        </LayoutView>
+    </NotFound>
+</Router>

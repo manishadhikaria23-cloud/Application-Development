@@ -1,0 +1,405 @@
+﻿@namespace JournalApp.Components.Pages.Journal
+@page "/today"
+@using JournalApp.Components.Journal.Components
+
+<style>
+    /* Clean WYSIWYG Today UI */
+    .today-root {
+        min-height: 100vh;
+        padding: 32px;
+        background: linear-gradient(180deg,#f4fbff 0%,#f9feff 100%);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        color: var(--text);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .card {
+        background: linear-gradient(180deg,#fff,#fbfeff);
+        border-radius: 14px;
+        border: 1px solid rgba(14,165,233,.06);
+        box-shadow: 0 12px 36px rgba(2,6,23,.06);
+        overflow: hidden;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 20px;
+        border-bottom: 1px solid rgba(0,0,0,.03);
+        background: linear-gradient(90deg, rgba(14,165,233,.03), transparent);
+    }
+
+    .header-left {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .badge {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        background: linear-gradient(135deg,#06b6d4,#0891b2);
+        font-weight: 900;
+        box-shadow: 0 8px 22px rgba(6,182,212,.10);
+    }
+
+    .title {
+        font-weight: 900;
+        font-size: 1.05rem;
+        color: #0f172a;
+    }
+
+    .subtitle {
+        color: #6b7280;
+        font-weight: 700;
+        font-size: .9rem;
+        margin-top: 4px;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.06);
+        background: #fff;
+        cursor: pointer;
+        font-weight: 800;
+    }
+
+        .btn.ghost {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,.04);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg,#06b6d4,#0891b2);
+            color: #fff;
+            border: none;
+            box-shadow: 0 10px 26px rgba(6,182,212,.08);
+        }
+
+        .btn.danger {
+            background: rgba(239,68,68,.08);
+            border: 1px solid rgba(239,68,68,.12);
+            color: #7a1414;
+        }
+
+    .layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 18px;
+        padding: 20px;
+    }
+
+    .editor {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    label.field-label {
+        font-weight: 900;
+        color: #475569;
+        font-size: .9rem;
+    }
+
+    input.field-input, select.field-input {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.06);
+        padding: 10px 12px;
+        font-weight: 700;
+        background: #fff;
+        color: var(--text);
+    }
+
+    .editor-area {
+        min-height: 420px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.06);
+        padding: 12px;
+        background: #fff;
+        outline: none;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow: auto;
+    }
+
+    .format-toolbar {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 6px;
+    }
+
+    .format-tool {
+        padding: 6px 8px;
+        border-radius: 8px;
+        background: rgba(255,255,255,.98);
+        border: 1px solid rgba(0,0,0,.06);
+        cursor: pointer;
+        font-weight: 800;
+    }
+
+    .side {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .preview, .meta {
+        border-radius: 10px;
+        background: linear-gradient(180deg,#fff,#fbfeff);
+        border: 1px solid rgba(0,0,0,.04);
+        padding: 12px;
+        box-shadow: 0 8px 20px rgba(2,6,23,.04);
+    }
+
+    .preview-title, .meta-title {
+        font-weight: 900;
+        margin-bottom: 8px;
+        color: #0f172a;
+    }
+
+    .meta-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .pill {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(14,165,233,0.06);
+        color: #064e52;
+        font-weight: 800;
+        border: 1px solid rgba(14,165,233,.08);
+    }
+
+    .meta-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+        color: #475569;
+        font-weight: 800;
+    }
+
+    .tags-wrap {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+
+    .checks {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .check {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(0,0,0,.06);
+        background: #fff;
+        font-weight: 700;
+    }
+
+    .selected-secondary {
+        margin-top: 8px;
+        color: #064e52;
+        font-weight: 800;
+    }
+
+    @@media (max-width:980px) {
+        .layout {
+            grid-template-columns: 1fr;
+        }
+
+        .side {
+            order: 2;
+        }
+    }</style>
+
+<div class="today-root">
+    <div class="container">
+        <div class="card" role="region" aria-label="Today's journal">
+            <div class="header">
+                <div class="header-left">
+                    <div class="badge">📝</div>
+                    <div>
+                        <div class="title">Today's Journal</div>
+                        <div class="subtitle">@DateTime.Today.ToString("dddd, MMM dd yyyy") — write · save</div>
+                    </div>
+                </div>
+
+                <div class="header-actions" role="group" aria-label="Actions">
+                    <button class="btn ghost" @onclick="LoadAsync" aria-label="Reload">🔄 Refresh</button>
+
+                    <div class="format-toolbar" role="toolbar" aria-label="Formatting">
+                        <button class="format-tool" @onclick='() => ExecCommand("bold")' aria-label="Bold"><b>B</b></button>
+                        <button class="format-tool" @onclick='() => ExecCommand("italic")' aria-label="Italic"><i>I</i></button>
+                        <button class="format-tool" @onclick='() => ExecCommand("formatBlock", "H2")' aria-label="H2">H2</button>
+                        <button class="format-tool" @onclick='() => ExecCommand("insertUnorderedList")' aria-label="List">•</button>
+                        <button class="format-tool" @onclick='() => ExecCommand("createLink")' aria-label="Link">🔗</button>
+                    </div>
+
+                    <button class="btn primary" @onclick="SaveAsync" disabled="@(!CanSave || IsSaving)" aria-label="Save">
+                        @(IsSaving ? "Saving..." : "Save / Update")
+                    </button>
+
+                    @if (HasEntry)
+                    {
+                        <button class="btn danger" @onclick="DeleteAsync" aria-label="Delete">🗑️ Delete</button>
+                    }
+                </div>
+            </div>
+
+            <div class="card-body">
+                @if (!string.IsNullOrWhiteSpace(Message))
+                {
+                    <div class="status" role="status">ℹ️ @Message</div>
+                }
+
+                <div class="layout" aria-live="polite">
+                    <div class="editor">
+                        <div class="field">
+                            <label class="field-label">Title</label>
+                            <input class="field-input" @bind="Model.Title" @bind:event="oninput" placeholder="Short title for today..." />
+                        </div>
+
+                        <div>
+                            <div class="format-toolbar" style="margin-bottom:6px;">
+                                <button class="format-tool" @onclick='() => ExecCommand("bold")'>Bold</button>
+                                <button class="format-tool" @onclick='() => ExecCommand("italic")'>Italic</button>
+                                <button class="format-tool" @onclick='() => ExecCommand("formatBlock", "H2")'>H2</button>
+                                <button class="format-tool" @onclick='() => ExecCommand("insertUnorderedList")'>List</button>
+                                <button class="format-tool" @onclick='() => ExecCommand("createLink")'>Link</button>
+                            </div>
+
+                            <div id="editor" class="editor-area" contenteditable="true" @ref="EditorRef" @oninput="OnEditorInput" aria-label="Rich text editor"></div>
+                        </div>
+
+                        <div style="display:flex;gap:12px;align-items:flex-start;">
+                            <div style="flex:1">
+                                <label class="field-label">Category</label>
+                                <input class="field-input" @bind="Model.Category" placeholder="e.g., Work, Health" />
+                            </div>
+
+                            <div style="width:220px">
+                                <label class="field-label">Primary Mood</label>
+                                @* Primary mood select (typed enum) *@
+                                <select class="field-input" @bind="Model.PrimaryMood">
+                                    @foreach (JournalApp.Models.Enums.MoodType mood in Enum.GetValues(typeof(JournalApp.Models.Enums.MoodType)))
+                                    {
+                                        <option value="@mood">@mood</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="field-label">Tags</label>
+                            <div class="tags-wrap">
+                                <TagInput Value="@Model.Tags" ValueChanged="@(v => Model.Tags = v)" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="field-label">Secondary Moods (max 2)</label>
+                            @* Secondary moods checks (typed enum) *@
+                            <div class="checks">
+                                @foreach (JournalApp.Models.Enums.MoodType mood in Enum.GetValues(typeof(JournalApp.Models.Enums.MoodType)))
+                                {
+                                    var moodText = mood.ToString();
+                                    <label class="check">
+                                        <input type="checkbox"
+                                               checked="@SecondaryMoodSet.Contains(moodText)"
+                                               @onchange="e => OnSecondaryMoodChanged(moodText, e)"
+                                               disabled="@(SecondaryMoodSet.Count >= 2 && !SecondaryMoodSet.Contains(moodText))" />
+                                        <span>@moodText</span>
+                                    </label>
+                                }
+                            </div>
+
+                            <!-- Live display of selected secondary moods (added only for display) -->
+                            <div class="selected-secondary" aria-live="polite">
+                                <span>Selected secondary moods:</span>
+                                @if (SecondaryMoodSet == null || SecondaryMoodSet.Count == 0)
+                                {
+                                    <span> <em>None</em></span>
+                                }
+                                else
+                                {
+                                    <span>@string.Join(", ", SecondaryMoodSet)</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="side" aria-label="Meta">
+                        <div class="meta" aria-label="Entry meta">
+                            <div class="meta-title">Entry meta</div>
+
+                            <div class="meta-row">
+                                <div class="pill">@Model.PrimaryMood</div>
+                                <div class="small">@Model.EntryDate.ToString("yyyy-MM-dd")</div>
+                            </div>
+
+                            <div class="quick-actions">
+                                <button class="btn" @onclick='() => InsertHtmlSnippet("<strong>Today I...</strong>")'>Insert Today header</button>
+                                <button class="btn primary" @onclick="SaveAsync" disabled="@(!CanSave || IsSaving)">Save</button>
+                            </div>
+
+                            <div class="meta-footer">
+                                <div>Word count: @CountWords(editorPlainText)</div>
+                                <div class="small">
+                                    @if (LastSaved.HasValue)
+                                    {
+                                        <span title="Last saved">@LastSaved.Value.ToString("g")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Not saved</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

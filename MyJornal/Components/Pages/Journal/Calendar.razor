@@ -1,0 +1,338 @@
+﻿@namespace JournalApp.Components.Pages.Journal
+@page "/calendar"
+
+<style>
+    /* Light-blue, bold calendar UI */
+    .cal {
+        min-height: 100vh;
+        padding: 30px;
+        background: linear-gradient(180deg, #eef9ff 0%, #f7fcff 100%);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: var(--text);
+    }
+
+    .cal-shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,255,255,0.92));
+        border-radius: 22px;
+        padding: 22px;
+        box-shadow: 0 20px 50px rgba(2,6,23,.06);
+        border: 1px solid rgba(14,165,233,.08);
+    }
+
+    /* header */
+    .cal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .cal-titlewrap {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .cal-badge {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: linear-gradient(135deg,#06b6d4,#0891b2);
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 900;
+        font-size: 22px;
+        box-shadow: 0 10px 26px rgba(6,182,212,.14);
+    }
+
+    .cal-title {
+        margin: 0;
+        font-weight: 900;
+        font-size: 1.35rem;
+        color: #0f172a;
+    }
+
+    .cal-subtitle {
+        margin: 2px 0 0;
+        color: #6b7280;
+        font-weight: 700;
+        font-size: .92rem;
+    }
+
+    .cal-nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .ui-btn {
+        padding: 8px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(15,23,42,.06);
+        background: #ffffff;
+        cursor: pointer;
+        font-weight: 900;
+        color: #0f172a;
+        box-shadow: 0 8px 20px rgba(2,6,23,.04);
+    }
+
+        .ui-btn.primary {
+            background: linear-gradient(135deg,#0891b2,#06b6d4);
+            color: white;
+            border: none;
+            box-shadow: 0 12px 34px rgba(6,182,212,.12);
+        }
+
+    .month-pill {
+        padding: 8px 16px;
+        border-radius: 999px;
+        background: rgba(14,165,233,.06);
+        color: #064e52;
+        font-weight: 900;
+        border: 1px solid rgba(14,165,233,.08);
+    }
+
+    /* calendar card */
+    .cal-card {
+        padding: 14px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(250,255,255,.98));
+        border: 1px solid rgba(14,165,233,.04);
+        box-shadow: 0 10px 30px rgba(2,6,23,.04);
+    }
+
+    .cal-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .wd {
+        text-align: center;
+        font-weight: 900;
+        font-size: .82rem;
+        color: #475569;
+        padding: 8px 0;
+    }
+
+    /* grid and cells */
+    .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 14px;
+    }
+
+    .day {
+        background: #ffffff;
+        border-radius: 14px;
+        min-height: 92px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 2px solid rgba(255,255,255,0.6);
+        transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+        position: relative;
+    }
+    /* bold box look */
+    .day {
+        border: 2px solid rgba(14,165,233,0.06);
+        box-shadow: 0 8px 20px rgba(2,6,23,.04);
+    }
+
+        .day:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 22px 48px rgba(2,6,23,.10);
+            border-color: rgba(14,165,233,.12);
+        }
+
+        /* muted (outside month) slots are visually subtle */
+        .day.muted {
+            background: transparent;
+            border: 1px dashed rgba(15,23,42,.04);
+            color: #94a3b8;
+            opacity: .6;
+            box-shadow: none;
+            transform: none;
+        }
+
+    .day-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .day-num {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: rgba(14,165,233,0.08);
+        color: #0f172a;
+        font-weight: 900;
+        font-size: .94rem;
+        border: 1px solid rgba(14,165,233,.10);
+    }
+
+    .day.muted .day-num {
+        background: transparent;
+        border-color: transparent;
+        opacity: .7;
+    }
+
+    .open-pill {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #def7ec;
+        color: #065f46;
+        font-weight: 900;
+        border: 1px solid rgba(6,95,70,.06);
+        font-size: .78rem;
+        cursor: pointer;
+    }
+
+    .entry-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#0891b2,#06b6d4);
+        box-shadow: 0 0 10px rgba(6,182,212,.24);
+    }
+
+    /* today */
+    .day.today {
+        border: 2px solid rgba(245,158,11,.22);
+        box-shadow: 0 10px 30px rgba(245,158,11,.06);
+    }
+
+    .today-badge {
+        background: linear-gradient(135deg,#FDE68A,#FBBF24);
+        color: #7a4a00;
+        padding: 5px 8px;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: .78rem;
+    }
+
+    .day-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+
+    @@media (max-width: 880px) {
+        .cal-shell
+
+    {
+        padding: 12px;
+    }
+
+    .day {
+        min-height: 72px;
+        padding: 8px;
+    }
+
+    .cal-grid {
+        gap: 10px;
+    }
+
+    }</style>
+
+<div class="cal">
+    <div class="cal-shell">
+        <header class="cal-header">
+            <div class="cal-titlewrap">
+                <div class="cal-badge">📅</div>
+                <div>
+                    <h2 class="cal-title">Journal Calendar</h2>
+                    <p class="cal-subtitle">Tap or click the Open pill to view a journal entry for that day.</p>
+                </div>
+            </div>
+
+            <div class="cal-nav">
+                <button class="ui-btn" @onclick="PrevMonth" aria-label="Previous month">⬅️ Prev</button>
+                <div class="month-pill" aria-live="polite">@CurrentMonth.ToString("MMMM yyyy")</div>
+                <button class="ui-btn primary" @onclick="NextMonth" aria-label="Next month">Next ➡️</button>
+            </div>
+        </header>
+
+        @* Build slots so only current month day numbers render (outside cells remain blank/muted) *@
+        @{
+            var firstDayOfMonth = new DateTime(CurrentMonth.Year, CurrentMonth.Month, 1);
+            var firstWeekday = (int)firstDayOfMonth.DayOfWeek; // 0 = Sunday
+            var daysInMonth = DateTime.DaysInMonth(CurrentMonth.Year, CurrentMonth.Month);
+
+            var slots = Enumerable.Range(0, 42).Select(i =>
+            {
+                var dayNumber = i - firstWeekday + 1;
+                return dayNumber;
+            }).ToList();
+        }
+
+        <div class="cal-card" role="region" aria-label="Journal calendar">
+            <div class="cal-weekdays">
+                <div class="wd">Sun</div><div class="wd">Mon</div><div class="wd">Tue</div>
+                <div class="wd">Wed</div><div class="wd">Thu</div><div class="wd">Fri</div><div class="wd">Sat</div>
+            </div>
+
+            <div class="cal-grid">
+                @foreach (var slot in slots)
+                {
+                    var inMonth = slot >= 1 && slot <= daysInMonth;
+                    DateTime? slotDate = inMonth ? new DateTime(CurrentMonth.Year, CurrentMonth.Month, slot) : null;
+                    var hasEntry = slotDate.HasValue && EntryDates.Contains(slotDate.Value);
+                    var isToday = slotDate.HasValue && slotDate.Value.Date == DateTime.Today;
+                    var css = "day" + (inMonth ? "" : " muted") + (isToday ? " today" : "");
+                    <div class="@css"
+                         @onclick="@(hasEntry && slotDate.HasValue ? (() => OpenDay(slotDate.Value)) : (Action?)null)"
+                         style="cursor:@(hasEntry ? "pointer" : "default")"
+                         title="@(inMonth? slotDate!.Value.ToString("yyyy-MM-dd") : string.Empty)"
+                         role="button"
+                         tabindex="@(hasEntry ? "0" : "-1")"
+                         @onkeydown="@(e => { if (hasEntry && (e.Key == "Enter" || e.Key == " ")) OpenDay(slotDate!.Value); })">
+
+                        <div class="day-top">
+                            <div class="day-num">@((inMonth) ? slot.ToString() : "")</div>
+
+                            @if (hasEntry)
+                            {
+                                <button class="open-pill"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => OpenDay(slotDate!.Value)"
+                                        aria-label="Open journal entry">
+                                    📖 Open
+                                </button>
+                            }
+                        </div>
+
+                        <div style="flex:1"></div>
+
+                        <div class="day-footer">
+                            @if (isToday)
+                            {
+                                <div class="today-badge" aria-hidden="true">Today</div>
+                            }
+                            <div>
+                                @if (hasEntry)
+                                {
+                                    <span class="entry-dot" title="Entry exists" aria-hidden="true"></span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

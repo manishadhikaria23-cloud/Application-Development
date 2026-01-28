@@ -1,0 +1,230 @@
+﻿@namespace JournalApp.Components.Journal.Components
+@using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.Components
+
+@if (!string.IsNullOrWhiteSpace(Content))
+{
+    <div style="border:1px solid #e6eef6; padding:12px; border-radius:8px; background:#fff;">
+        @((MarkupString)RenderedHtml)
+    </div>
+}
+
+@code {
+    [Parameter] public string? Content { get; set; }
+
+    private string RenderedHtml => PrepareOutput(Content ?? string.Empty);
+
+    private static string PrepareOutput(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return string.Empty;
+
+        // Heuristic: if it contains HTML tags, treat as HTML
+        if (LooksLikeHtml(input))
+        {
+            var sanitized = SanitizeHtml(input);
+
+            // Fallback: if sanitizer removed everything, show encoded original so user sees content
+            if (string.IsNullOrWhiteSpace(StripTags(sanitized)))
+            {
+                return System.Net.WebUtility.HtmlEncode(input);
+            }
+
+            return sanitized;
+        }
+
+        // Otherwise treat as markdown
+        return ConvertMarkdown(input);
+    }
+
+    private static bool LooksLikeHtml(string s)
+    {
+        var t = s.TrimStart();
+        if (t.StartsWith("<")) return true;
+        // simple tag detection anywhere
+        return Regex.IsMatch(s, @"<\s*\w+[^>]*>", RegexOptions.Singleline);
+    }
+
+    // Improved sanitizer: remove <script>/<style> blocks, on* attributes and javascript: URLs.
+    private static string SanitizeHtml(string html)
+    {
+        if (string.IsNullOrEmpty(html)) return string.Empty;
+
+        // 1) Remove script/style blocks entirely
+        html = Regex.Replace(html, @"<script[\s\S]*?>[\s\S]*?</script>", string.Empty, RegexOptions.IgnoreCase);
+        html = Regex.Replace(html, @"<style[\s\S]*?>[\s\S]*?</style>", string.Empty, RegexOptions.IgnoreCase);
+
+        // 2) Remove event handler attributes like onclick="..." or onmouseover='...'
+        // Robust pattern: whitespace + on + letters, then = then quoted or unquoted value
+        html = Regex.Replace(html, @"\s+on\w+\s*=\s*(?:'[^']*'|""[^""]*""|\S+)", string.Empty, RegexOptions.IgnoreCase);
+
+        // 3) Replace javascript: URLs in href/src with safe placeholder
+        html = Regex.Replace(html, @"(?:(href|src)\s*=\s*)(['""]?)\s*javascript:[^'"">\s]+(['""]?)", "$1=\"#\"", RegexOptions.IgnoreCase);
+
+        // 4) Optionally remove embedded data: URIs for images (if you want stricter)
+        // html = Regex.Replace(html, @"src\s*=\s*(['""]?)data:[^'""]+(['""]?)", "src=\"#\"", RegexOptions.IgnoreCase);
+
+        // 5) Remove any remaining inline <meta> or base tags (optional)
+        html = Regex.Replace(html, @"<\s*base[^>]*>", string.Empty, RegexOptions.IgnoreCase);
+        html = Regex.Replace(html, @"<\s*meta[^>]*>", string.Empty, RegexOptions.IgnoreCase);
+
+        return html;
+    }
+
+    // Helper: remove tags to check if output is empty
+    private static string StripTags(string html)
+    {
+        if (string.IsNullOrEmpty(html)) return string.Empty;
+        return Regex.Replace(html, "<.*?>", string.Empty).Trim();
+    }
+
+    // Existing markdown conversion (unchanged)
+    private static string ConvertMarkdown(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return string.Empty;
+
+        // Normalize line endings
+        text = text.Replace("\r\n", "\n").Replace("\r", "\n");
+
+        // 1) Extract fenced code blocks (``` ... ```) and replace with placeholders
+        var codeBlocks = new List<string>();
+        text = Regex.Replace(
+            text,
+            @"```(?:\w*\n)?([\s\S]*?)```",
+            m =>
+            {
+                var code = m.Groups[1].Value;
+                // HTML-encode code block contents
+                var encoded = System.Net.WebUtility.HtmlEncode(code);
+                var placeholder = $"@@CODE{codeBlocks.Count}@@";
+                codeBlocks.Add($"<pre><code>{encoded}</code></pre>");
+                return placeholder;
+            },
+            RegexOptions.Multiline);
+
+        // 2) Escape remaining HTML
+        text = System.Net.WebUtility.HtmlEncode(text);
+
+        // 3) Inline code (`code`)
+        text = Regex.Replace(text, @"`([^`]+?)`", m =>
+        {
+            var code = System.Net.WebUtility.HtmlEncode(m.Groups[1].Value);
+            return $"<code>{code}</code>";
+        });
+
+        // 4) Images ![alt](url)
+        text = Regex.Replace(text, @"!\[([^\]]*?)\]\(([^)]+?)\)", m =>
+        {
+            var alt = System.Net.WebUtility.HtmlEncode(m.Groups[1].Value);
+            var url = System.Net.WebUtility.HtmlEncode(m.Groups[2].Value);
+            return $"<img src=\"{url}\" alt=\"{alt}\" style=\"max-width:100%;\" />";
+        });
+
+        // 5) Links [text](url)
+        text = Regex.Replace(text, @"\[(.*?)\]\((.*?)\)", m =>
+        {
+            var textPart = m.Groups[1].Value;
+            var url = System.Net.WebUtility.HtmlEncode(m.Groups[2].Value);
+            return $"<a href=\"{url}\" target=\"_blank\" rel=\"noopener noreferrer\">{textPart}</a>";
+        });
+
+        // 6) Headings (###### to #)
+        for (int i = 6; i >= 1; i--)
+        {
+            var pattern = $"^{new string('#', i)}\\s+(.*)$";
+            var replacement = $"<h{i}>$1</h{i}>";
+            text = Regex.Replace(text, pattern, replacement, RegexOptions.Multiline);
+        }
+
+        // 7) Blockquotes
+        text = Regex.Replace(text, @"(^|\n)>\s?(.*)", m =>
+        {
+            return $"{m.Groups[1].Value}<blockquote>{m.Groups[2].Value}</blockquote>";
+        }, RegexOptions.Multiline);
+
+        // 8) Lists
+        // Unordered lists (-, *, +)
+        text = ConvertListItems(text, @"(^|\n)([ \t]*)([-\*\+])\s+(.+)");
+        // Ordered lists (1. 2. ...)
+        text = ConvertListItems(text, @"(^|\n)([ \t]*)(\d+\.)\s+(.+)", ordered: true);
+
+        // 9) Bold **text** or __text__
+        text = Regex.Replace(text, @"\*\*(.+?)\*\*", "<strong>$1</strong>");
+        text = Regex.Replace(text, @"__(.+?)__", "<strong>$1</strong>");
+
+        // 10) Italic *text* or _text_
+        text = Regex.Replace(text, @"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", "<em>$1</em>");
+        text = Regex.Replace(text, @"(?<!_)_(?!_)(.+?)(?<!_)_(?!_)", "<em>$1</em>");
+
+        // 11) Horizontal rules
+        text = Regex.Replace(text, @"(^|\n)(---|\*\*\*|___)(\n|$)", "$1<hr/>$3", RegexOptions.Multiline);
+
+        // 12) Convert double line breaks to paragraphs where appropriate
+        var paragraphs = text.Split(new[] { "\n\n" }, StringSplitOptions.None)
+                             .Select(p => p.Trim())
+                             .Where(p => p.Length > 0)
+                             .Select(p =>
+                             {
+                                 // If already a block element, leave as-is
+                                 if (p.StartsWith("<h") || p.StartsWith("<ul") || p.StartsWith("<ol") || p.StartsWith("<pre") || p.StartsWith("<blockquote") || p.StartsWith("<hr") || p.StartsWith("<img") || p.StartsWith("<p") || p.StartsWith("<table"))
+                                     return p;
+                                 // Wrap in <p>
+                                 return $"<p>{p.Replace("\n", "<br/>")}</p>";
+                             });
+
+        var result = string.Join("\n", paragraphs);
+
+        // 13) Restore code block placeholders
+        for (int i = 0; i < codeBlocks.Count; i++)
+        {
+            var placeholder = $"@@CODE{i}@@";
+            result = result.Replace(System.Net.WebUtility.HtmlEncode(placeholder), codeBlocks[i]); // placeholder might have been encoded
+            result = result.Replace(placeholder, codeBlocks[i]);
+        }
+
+        return result;
+    }
+
+    private static string ConvertListItems(string text, string itemPattern, bool ordered = false)
+    {
+        var lines = text.Split('\n').ToList();
+        var sb = new System.Text.StringBuilder();
+
+        bool inList = false;
+        bool currentOrdered = ordered;
+        foreach (var raw in lines)
+        {
+            var line = raw;
+            var m = Regex.Match(line, itemPattern);
+            if (m.Success)
+            {
+                var marker = m.Groups[3].Value;
+                var content = m.Groups[4].Value.Trim();
+                if (!inList)
+                {
+                    inList = true;
+                    currentOrdered = ordered;
+                    sb.AppendLine(currentOrdered ? "<ol>" : "<ul>");
+                }
+                sb.AppendLine($"<li>{content}</li>");
+            }
+            else
+            {
+                if (inList)
+                {
+                    inList = false;
+                    sb.AppendLine(currentOrdered ? "</ol>" : "</ul>");
+                }
+                sb.AppendLine(line);
+            }
+        }
+
+        if (inList)
+        {
+            sb.AppendLine(currentOrdered ? "</ol>" : "</ul>");
+        }
+
+        return sb.ToString();
+    }
+}

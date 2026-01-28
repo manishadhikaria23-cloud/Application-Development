@@ -1,0 +1,123 @@
+﻿@namespace JournalApp.Components.Journal.Components
+
+@using Microsoft.AspNetCore.Components
+
+<div style="margin-bottom: 10px;">
+    <label><b>Tags (choose pre-built or type comma-separated)</b></label><br />
+
+    <div style="margin:8px 0; display:flex; flex-wrap:wrap; gap:6px;">
+        @foreach (var tag in PrebuiltTags)
+        {
+            var isSelected = SelectedPrebuilt.Contains(tag, StringComparer.OrdinalIgnoreCase);
+            <button type="button"
+                    @onclick="() => TogglePrebuilt(tag)"
+                    style="
+                            padding:6px 10px;
+                            border-radius:10px;
+                            border:1px solid rgba(15,23,42,.08);
+                            background:@(isSelected ? "var(--accent)" : "transparent");
+                            color:@(isSelected ? "white" : "var(--muted)");
+                            font-weight:800;
+                            cursor:pointer;">
+                @tag
+            </button>
+        }
+    </div>
+
+    <input style="width:100%; margin-top:6px;" value="@CustomInput" @oninput="OnInputChanged" placeholder="Add custom tags, comma separated (e.g. Travel, Cooking)" />
+</div>
+
+@code {
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+
+    // Optional override for pre-built tags
+    [Parameter]
+    public IEnumerable<string> PrebuiltTags { get; set; } = new[]
+    {
+        "Work","Career","Studies","Family","Friends","Relationships",
+        "Health","Fitness","Personal Growth","Self-care","Hobbies","Travel","Nature",
+        "Finance","Spirituality","Birthday","Holiday","Vacation","Celebration","Exercise",
+        "Reading","Writing","Cooking","Meditation","Yoga","Music","Shopping",
+        "Parenting","Projects","Planning","Reflection"
+    };
+
+    private HashSet<string> SelectedPrebuilt { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    private string CustomInput { get; set; } = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        // Parse incoming Value to pre-select prebuilt tags and populate custom input
+        SelectedPrebuilt.Clear();
+        CustomInput = string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(Value))
+        {
+            var parts = Value
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(p => p.Trim())
+                .Where(p => !string.IsNullOrWhiteSpace(p))
+                .ToList();
+
+            foreach (var p in parts)
+            {
+                if (PrebuiltTags.Any(pt => string.Equals(pt, p, StringComparison.OrdinalIgnoreCase)))
+                {
+                    SelectedPrebuilt.Add(p);
+                }
+                else
+                {
+                    // keep custom tags in the input box (preserve order of non-prebuilt parts)
+                    if (!string.IsNullOrEmpty(CustomInput))
+                        CustomInput += ", ";
+                    CustomInput += p;
+                }
+            }
+        }
+    }
+
+    private async Task TogglePrebuilt(string tag)
+    {
+        if (SelectedPrebuilt.Contains(tag, StringComparer.OrdinalIgnoreCase))
+            SelectedPrebuilt.RemoveWhere(t => string.Equals(t, tag, StringComparison.OrdinalIgnoreCase));
+        else
+            SelectedPrebuilt.Add(tag);
+
+        await EmitValueAsync();
+    }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        CustomInput = e.Value?.ToString() ?? string.Empty;
+        await EmitValueAsync();
+    }
+
+    private async Task EmitValueAsync()
+    {
+        // Combine selected prebuilt tags + custom tags, de-duplicate case-insensitive
+        var combined = new List<string>();
+
+        // preserve prebuilt selection order from PrebuiltTags
+        foreach (var pt in PrebuiltTags)
+        {
+            if (SelectedPrebuilt.Contains(pt, StringComparer.OrdinalIgnoreCase))
+                combined.Add(pt);
+        }
+
+        var customParts = CustomInput
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(p => p.Trim())
+            .Where(p => !string.IsNullOrWhiteSpace(p))
+            .ToList();
+
+        foreach (var cp in customParts)
+        {
+            if (!combined.Any(c => string.Equals(c, cp, StringComparison.OrdinalIgnoreCase)))
+                combined.Add(cp);
+        }
+
+        var newValue = combined.Count == 0 ? null : string.Join(", ", combined);
+        Value = newValue;
+        await ValueChanged.InvokeAsync(newValue);
+    }
+}

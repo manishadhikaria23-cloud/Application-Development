@@ -1,0 +1,67 @@
+﻿@namespace JournalApp.Components.Layout
+@inherits LayoutComponentBase
+@inject JournalApp.Services.Interfaces.IThemeService ThemeService
+@inject IJSRuntime JS
+@inject JournalApp.Services.Implementations.SessionService Session
+@inject NavigationManager Nav
+
+<div class="app-shell">
+    <aside class="sidebar">
+        <NavMenu />
+    </aside>
+
+    <main class="main">
+        @Body
+    </main>
+</div>
+
+<style>
+    .app-shell {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 320px;
+        flex: 0 0 320px;
+    }
+
+    .main {
+        flex: 1;
+        min-width: 0;
+    }
+</style>
+
+@code {
+    private bool _applied;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !_applied)
+        {
+            _applied = true;
+            var theme = ThemeService.GetTheme() ?? "light";
+            try
+            {
+                await JS.InvokeVoidAsync("setTheme", theme);
+            }
+            catch
+            {
+                // ignore if JS not available (safe fallback)
+            }
+        }
+
+        // existing lock check (preserve prior behavior)
+        if (firstRender)
+        {
+            if (!Session.IsUnlocked)
+            {
+                var relative = Nav.ToBaseRelativePath(Nav.Uri).TrimEnd('/');
+                if (!relative.Equals("lock", StringComparison.OrdinalIgnoreCase))
+                {
+                    Nav.NavigateTo("/lock", true);
+                }
+            }
+        }
+    }
+}

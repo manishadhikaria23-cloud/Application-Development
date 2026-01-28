@@ -1,0 +1,443 @@
+﻿@namespace JournalApp.Components.Pages.Auth
+@page "/lock"
+@using Microsoft.AspNetCore.Components.Web
+@inject JournalApp.Services.Interfaces.IAuthService AuthService
+@inject JournalApp.Services.Implementations.SessionService Session
+@inject NavigationManager Nav
+
+@* RequestedUri is passed from Routes.razor so we can return there after unlock *@
+
+<style>
+    /* Fullscreen centered lock UI */
+    .lock-shell {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(180deg, rgba(37,99,235,.06), rgba(6,182,212,.03));
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .lock-card {
+        width: 420px;
+        max-width: calc(100% - 32px);
+        padding: 22px;
+        border-radius: 16px;
+        background: var(--surface, #ffffff);
+        box-shadow: 0 24px 60px rgba(2,6,23,.10);
+        border: 1px solid rgba(0,0,0,.04);
+        text-align: center;
+        position: relative;
+    }
+
+    .lock-title {
+        margin: 0 0 6px;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--text, #0f172a);
+    }
+
+    .lock-sub {
+        margin: 0 0 16px;
+        color: var(--muted, #64748b);
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .vis-toggle {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: transparent;
+        border: none;
+        color: var(--accent, #2563eb);
+        font-weight: 800;
+        cursor: pointer;
+        padding: 6px 8px;
+        border-radius: 8px;
+    }
+
+        .vis-toggle:hover {
+            background: rgba(0,0,0,0.03);
+        }
+
+    .pin-boxes {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 18px 0 12px;
+    }
+
+    .pin-box {
+        width: 48px;
+        height: 56px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.08);
+        display: grid;
+        place-items: center;
+        font-size: 1.25rem;
+        font-weight: 800;
+        background: var(--card, #f7fafc);
+        color: var(--text, #0f172a);
+    }
+
+        .pin-box.filled {
+            background: rgba(37,99,235,.08);
+            border-color: rgba(37,99,235,.22);
+        }
+
+    .keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .key {
+        padding: 12px 0;
+        border-radius: 10px;
+        background: rgba(0,0,0,0.03);
+        border: 1px solid rgba(0,0,0,0.05);
+        font-weight: 800;
+        font-size: 1.1rem;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .key:active {
+            transform: translateY(1px);
+        }
+
+        .key.action {
+            background: linear-gradient(135deg, var(--accent, #2563eb), var(--accent2, #06b6d4));
+            color: white;
+        }
+
+    .small {
+        font-size: 0.9rem;
+        color: var(--muted, #64748b);
+    }
+
+    .msg {
+        margin-top: 10px;
+        font-weight: 700;
+        color: #b91c1c;
+    }
+
+    .row {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 12px;
+    }
+
+    .link {
+        cursor: pointer;
+        color: var(--accent, #2563eb);
+        text-decoration: underline;
+        font-weight: 700;
+    }
+</style>
+
+<div class="lock-shell">
+    <div class="lock-card" role="dialog" aria-labelledby="lockTitle" aria-describedby="lockDesc">
+        <h2 id="lockTitle" class="lock-title">@TitleText</h2>
+        <div id="lockDesc" class="lock-sub">@SubtitleText</div>
+
+        <button class="vis-toggle" @onclick="ToggleShowPin" aria-pressed="@ShowPin" aria-label="Toggle PIN visibility">
+            @(ShowPin ? "Hide" : "Show")
+        </button>
+
+        <div class="pin-boxes" aria-hidden="false">
+            @for (int i = 0; i < DisplayLength; i++)
+            {
+                var filled = i < Pin.Length;
+                <div class="pin-box @(filled ? "filled" : "")">
+                    @if (filled)
+                    {
+                        @if (ShowPin)
+                        {
+                            <span>@Pin[i]</span>
+                        }
+                        else
+                        {
+                            <span>&#8226;</span>
+                        }
+                    }
+                    else
+                    {
+                        <span>&nbsp;</span>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="small">Use the keypad or your keyboard. PIN length: 4–8 digits.</div>
+
+        @if (!string.IsNullOrEmpty(Message))
+        {
+            <div class="msg">@Message</div>
+        }
+
+        <div class="keypad" @onkeydown="OnKeydown" tabindex="0">
+            @foreach (var k in new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "back", "0", "enter" })
+            {
+                if (k == "back")
+                {
+                    <div class="key" @onclick="Backspace">⌫</div>
+                }
+                else if (k == "enter")
+                {
+                    <div class="key action" @onclick="SubmitAsync">OK</div>
+                }
+                else
+                {
+                    <div class="key" @onclick="() => AppendDigit(k)">@k</div>
+                }
+            }
+        </div>
+
+        <div class="row">
+            @if (!PinIsSet)
+            {
+                <span class="link" @onclick="SwitchToSetPin">Set PIN</span>
+            }
+            else
+            {
+                <span class="link" @onclick="GotoChangePin">Change PIN</span>
+            }
+            <span class="small">·</span>
+            <span class="link" @onclick="UsePasswordInstead">Use password (not implemented)</span>
+        </div>
+
+        @if (IsProcessing)
+        {
+            <div class="small" style="margin-top:8px;">Processing…</div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? RequestedUri { get; set; }
+
+    // UI state
+    private string Pin { get; set; } = string.Empty;
+    private bool PinIsSet { get; set; }
+    private bool IsProcessing { get; set; }
+    private string Message { get; set; } = string.Empty;
+    private bool _isSettingNew;
+    private string _confirmPin = string.Empty;
+
+    private int DisplayLength => Math.Max(4, Math.Min(8, PinLength)); // visual boxes
+    private int PinLength => _isSettingNew ? _desiredLength : (_storedPinLength ?? 4);
+    private int _desiredLength = 4;
+    private int? _storedPinLength;
+
+    // NEW: show/hide toggle for pin entry
+    private bool ShowPin { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        PinIsSet = await AuthService.IsPinSetAsync();
+        if (PinIsSet)
+        {
+            // stored pin length unknown; default 4 for visuals
+            _storedPinLength = 4;
+        }
+        else
+        {
+            _isSettingNew = false;
+        }
+    }
+
+    private string TitleText => _isSettingNew ? "Set a new PIN" : (PinIsSet ? "Enter PIN" : "Create PIN");
+    private string SubtitleText => _isSettingNew ? "Choose a secure 4–8 digit PIN and confirm." : (PinIsSet ? "Enter your PIN to unlock the app." : "You don't have a PIN yet — create one now.");
+
+    // Append digit (from keypad)
+    private void AppendDigit(string d)
+    {
+        if (IsProcessing) return;
+        if (Pin.Length >= 8) return;
+        if (!char.IsDigit(d[0])) return;
+        Pin += d;
+        Message = string.Empty;
+
+        // If setting new PIN and reached desired length, move to confirm step automatically
+        if (_isSettingNew && Pin.Length == _desiredLength)
+        {
+            // wait for explicit OK — don't auto confirm to allow correction
+        }
+        StateHasChanged();
+    }
+
+    private void Backspace()
+    {
+        if (IsProcessing) return;
+        if (Pin.Length == 0) return;
+        Pin = Pin.Substring(0, Pin.Length - 1);
+        Message = string.Empty;
+    }
+
+    private async Task SubmitAsync()
+    {
+        if (IsProcessing) return;
+        IsProcessing = true;
+        Message = string.Empty;
+
+        try
+        {
+            // If user is creating a pin (no pin set) show set-pin flow
+            if (!_isSettingNew && !PinIsSet)
+            {
+                // start set flow
+                _isSettingNew = true;
+                _desiredLength = Math.Max(4, Math.Min(8, Pin.Length == 0 ? 4 : Pin.Length));
+                Pin = string.Empty;
+                Message = "Enter new PIN and press OK.";
+                return;
+            }
+
+            if (_isSettingNew && !PinIsSet)
+            {
+                // When setting for first time: capture first entry as new pin, prompt confirm
+                if (string.IsNullOrEmpty(_confirmPin))
+                {
+                    if (Pin.Length < 4 || Pin.Length > 8)
+                    {
+                        Message = "PIN must be 4–8 digits.";
+                        return;
+                    }
+                    _confirmPin = Pin;
+                    Pin = string.Empty;
+                    Message = "Confirm new PIN.";
+                    return;
+                }
+                else
+                {
+                    // confirm step
+                    if (Pin != _confirmPin)
+                    {
+                        Message = "PINs do not match. Start again.";
+                        _confirmPin = string.Empty;
+                        Pin = string.Empty;
+                        return;
+                    }
+
+                    // set and unlock
+                    var ok = await AuthService.SetPinAsync(Pin);
+                    if (!ok)
+                    {
+                        Message = "Failed to save PIN. Ensure it is 4–8 digits.";
+                        _confirmPin = string.Empty;
+                        Pin = string.Empty;
+                        return;
+                    }
+
+                    Session.IsUnlocked = true;
+                    Message = "PIN saved. Unlocking…";
+                    await NavigateAfterUnlock();
+                    return;
+                }
+            }
+
+            // Normal verify path
+            if (!string.IsNullOrEmpty(Pin))
+            {
+                var ok = await AuthService.VerifyPinAsync(Pin);
+                if (!ok)
+                {
+                    Message = "Incorrect PIN.";
+                    Pin = string.Empty;
+                    return;
+                }
+
+                // success
+                Session.IsUnlocked = true;
+                Message = "Unlocked. Redirecting…";
+                await NavigateAfterUnlock();
+                return;
+            }
+            else
+            {
+                Message = "Enter PIN.";
+            }
+        }
+        finally
+        {
+            IsProcessing = false;
+        }
+    }
+
+    private async Task NavigateAfterUnlock()
+    {
+        // Small delay to show success
+        await Task.Delay(350);
+
+        // Determine where to navigate next
+        try
+        {
+            var requested = RequestedUri ?? string.Empty;
+            var relative = Nav.ToBaseRelativePath(requested).Trim('/');
+
+            if (string.IsNullOrEmpty(relative) || relative.Equals("lock", StringComparison.OrdinalIgnoreCase))
+            {
+                Nav.NavigateTo("/today", true);
+            }
+            else
+            {
+                // go to requested path
+                Nav.NavigateTo(requested, true);
+            }
+        }
+        catch
+        {
+            Nav.NavigateTo("/today", true);
+        }
+    }
+
+    private void SwitchToSetPin()
+    {
+        _isSettingNew = true;
+        Pin = string.Empty;
+        _confirmPin = string.Empty;
+        Message = "Enter a new PIN then press OK.";
+    }
+
+    private void GotoChangePin()
+    {
+        // Guard: only when unlocked
+        if (!Session.IsUnlocked) return;
+        Nav.NavigateTo("/settings/security", true);
+    }
+
+    private void UsePasswordInstead()
+    {
+        Message = "Password flow not implemented.";
+    }
+
+    // NEW: toggle handler
+    private void ToggleShowPin()
+    {
+        ShowPin = !ShowPin;
+    }
+
+    // Keyboard support
+    private async Task OnKeydown(KeyboardEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(e.Key) && e.Key.Length == 1 && char.IsDigit(e.Key[0]))
+        {
+            AppendDigit(e.Key);
+            return;
+        }
+
+        if (e.Key == "Backspace")
+        {
+            Backspace();
+            return;
+        }
+
+        if (e.Key == "Enter")
+        {
+            await SubmitAsync();
+        }
+    }
+}

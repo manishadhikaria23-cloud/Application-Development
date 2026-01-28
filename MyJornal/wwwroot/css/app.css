@@ -1,0 +1,89 @@
+﻿/* Global theme variables moved here so theme applies to all pages */
+
+/* Light theme (defaults) */
+:root {
+    --bg: #f5f8ff;
+    --surface: rgba(255,255,255,.92);
+    --border: rgba(15,23,42,.10);
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #2563eb;
+    --accent2: #06b6d4;
+    --r-xl: 22px;
+    --r-lg: 18px;
+    --r-md: 14px;
+    /* fallback values used elsewhere in existing CSS */
+    --card: var(--surface);
+}
+/* LIGHT THEME VARIABLES */
+[data-theme='light'] {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --accent: #0891b2;
+}
+
+/* DARK THEME VARIABLES */
+[data-theme='dark'] {
+    --bg: #020617;
+    --surface: #0f172a;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #1e293b;
+    --accent: #22d3ee;
+}
+
+/* Apply to Body */
+body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- rest of existing stylesheet preserved --- */
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+table, th, td {
+    border-color: var(--border) !important;
+}
+
+input, textarea, select {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px;
+    border-radius: 6px;
+}
+
+
+/* keep the rest of your app.css intact below (existing rules) */
+/* ... existing rules from your original app.css continue ... */
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, .btn-link {
+    color: var(--accent);
+}
+
+/* ... (remaining app.css content unchanged) ... */
+
+h1:focus {
+    outline: none;
+}
+
+/* Dashboard Page */
+.dash {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 1100px;
+}
+
+/* (rest of file unchanged) */

@@ -1,0 +1,196 @@
+﻿@namespace JournalApp.Components.Layout
+
+<style>
+    /* ===== LIGHT PROFESSIONAL THEME ===== */
+    :root {
+        --nav-bg: #f4f7fb;
+        --nav-card: #ffffff;
+        --nav-border: rgba(0,0,0,.08);
+        --nav-text: #0f172a;
+        --nav-muted: #64748b;
+        --nav-accent: #2563eb; /* blue */
+        --nav-accent2: #06b6d4; /* cyan */
+
+        --nav-radius: 18px;
+    }
+
+    /* Top bar */
+    .top-row.navbar {
+        background: linear-gradient(135deg, var(--nav-accent), var(--nav-accent2)) !important;
+        border-bottom: 1px solid rgba(255,255,255,.4);
+        padding: 12px 14px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    }
+
+    .navbar-brand {
+        font-weight: 900;
+        letter-spacing: .3px;
+        color: white !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .brand-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: white;
+        box-shadow: 0 0 10px rgba(255,255,255,.8);
+    }
+
+    /* Sidebar background */
+    .nav-scrollable {
+        background: radial-gradient(900px 500px at top left, rgba(37,99,235,.12), transparent), radial-gradient(700px 500px at bottom right, rgba(6,182,212,.10), transparent), var(--nav-bg);
+        border-right: 1px solid var(--nav-border);
+        padding: 16px;
+        min-height: calc(100vh - 56px);
+    }
+
+    /* Card */
+    .nav-list {
+        list-style: none;
+        margin: 0;
+        padding: 14px;
+        background: var(--nav-card);
+        border-radius: var(--nav-radius);
+        border: 1px solid var(--nav-border);
+        box-shadow: 0 14px 40px rgba(0,0,0,.08);
+    }
+
+    .nav-section {
+        font-size: .72rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--nav-muted);
+        padding: 12px 10px 6px;
+        font-weight: 800;
+    }
+
+    .nav-item {
+        list-style: none;
+        margin: 6px 0;
+    }
+
+    .nav-link {
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px !important;
+        border-radius: 14px;
+        color: var(--nav-text) !important;
+        font-weight: 700;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: all .18s ease;
+    }
+
+        .nav-link:hover {
+            background: rgba(37,99,235,.08);
+            border-color: rgba(37,99,235,.25);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(37,99,235,.18);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(37,99,235,.18), rgba(6,182,212,.16));
+            border-color: rgba(37,99,235,.35);
+            box-shadow: 0 10px 26px rgba(37,99,235,.22);
+        }
+
+    .nav-ico {
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: rgba(37,99,235,.10);
+        border: 1px solid rgba(37,99,235,.18);
+    }
+
+    .nav-link.active .nav-ico {
+        background: linear-gradient(135deg, rgba(37,99,235,.25), rgba(6,182,212,.20));
+    }
+
+    .nav-ico svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .navbar-toggler {
+        margin: 10px 14px;
+        accent-color: var(--nav-accent);
+    }
+</style>
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <span class="brand-dot"></span>
+            MyJornal
+        </a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav aria-label="Main navigation">
+        <ul class="nav-list">
+
+            <li class="nav-section">Navigation</li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="nav-ico">🏠</span> Home
+                </NavLink>
+            </li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/dashboard">
+                    <span class="nav-ico">📊</span> Dashboard
+                </NavLink>
+            </li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/today">
+                    <span class="nav-ico">📘</span> Today Journal
+                </NavLink>
+            </li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/entries">
+                    <span class="nav-ico">📄</span> Journal Entries
+                </NavLink>
+            </li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/calendar">
+                    <span class="nav-ico">📅</span> Calendar
+                </NavLink>
+            </li>
+
+
+            <li class="nav-section">Preferences</li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/settings/theme">
+                    <span class="nav-ico">🎨</span> Theme Settings
+                </NavLink>
+            </li>
+            
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/settings/security">
+                    <span class="nav-ico">🔒</span> Change PIN
+                </NavLink>
+            </li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/export">
+                    <span class="nav-ico">⬇️</span> Export PDF
+                </NavLink>
+            </li>
+
+        </ul>
+    </nav>
+</div>

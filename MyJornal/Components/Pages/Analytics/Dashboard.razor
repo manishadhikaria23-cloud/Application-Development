@@ -1,0 +1,496 @@
+﻿@namespace JournalApp.Components.Pages.Analytics
+@page "/dashboard"
+@using System.Linq
+
+<style>
+    /* Use global theme variables from wwwroot/css/app.css (do NOT redefine :root here) */
+
+    .dash {
+        min-height: 100vh;
+        padding: 26px;
+        background: radial-gradient(900px 500px at 12% 8%, rgba(37,99,235,.14), transparent), radial-gradient(900px 500px at 88% 18%, rgba(6,182,212,.12), transparent), radial-gradient(900px 500px at 50% 95%, rgba(99,102,241,.10), transparent), var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    .wrap {
+        max-width: 1150px;
+        margin: 0 auto;
+    }
+
+    .dash-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+    }
+
+    .title-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .title-badge {
+        width: 54px;
+        height: 54px;
+        border-radius: 18px;
+        background: linear-gradient(135deg,var(--accent),var(--accent2));
+        display: grid;
+        place-items: center;
+        color: white;
+        font-size: 22px;
+    }
+
+    .dash-title {
+        margin: 0;
+        font-size: 1.55rem;
+        font-weight: 900;
+    }
+
+    .dash-subtitle {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: .92rem;
+    }
+
+    .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r-xl);
+        box-shadow: 0 18px 50px rgba(2,6,23,.08);
+        padding: 16px;
+    }
+
+    .dash-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+
+    .stat {
+        padding: 16px;
+        border-radius: 14px;
+        background: var(--surface);
+        box-shadow: 0 10px 30px rgba(2,6,23,.06);
+    }
+
+    .stat-label {
+        color: var(--muted);
+        font-weight: 800;
+    }
+
+    .stat-value {
+        font-size: 2.05rem;
+        font-weight: 950;
+        margin: 8px 0 2px;
+    }
+
+    /* make streak cards clearly actionable */
+    .streak-card {
+        cursor: pointer;
+    }
+
+        .streak-card:hover {
+            transform: translateY(-3px);
+            transition: .12s;
+            box-shadow: 0 14px 36px rgba(2,6,23,.06);
+        }
+
+    /* Insights grid */
+    .insights-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 14px;
+        margin-top: 12px;
+    }
+
+    .chart-card {
+        padding: 16px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(255,255,255,.95), var(--surface));
+        border: 1px solid var(--border);
+    }
+
+    .donut-wrap {
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin: 0 auto;
+    }
+
+    .donut-legend {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .legend-item {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-weight: 800;
+        color: var(--muted);
+    }
+
+    .legend-swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .bar-chart {
+        width: 100%;
+        height: 180px;
+    }
+
+    .sparkline {
+        width: 100%;
+        height: 80px;
+    }
+
+    /* Modal / missed list styles */
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(2,6,23,.45);
+        display: grid;
+        place-items: center;
+        z-index: 60;
+    }
+
+    .modal {
+        background: var(--surface);
+        padding: 18px;
+        border-radius: 12px;
+        max-width: 640px;
+        width: 94%;
+        box-shadow: 0 18px 50px rgba(2,6,23,.18);
+        border: 1px solid rgba(0,0,0,.06);
+    }
+
+        .modal h3 {
+            margin: 0 0 8px 0;
+            font-weight: 900;
+        }
+
+        .modal .list {
+            max-height: 320px;
+            overflow: auto;
+            margin: 12px 0;
+        }
+
+    .missed-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dashed rgba(0,0,0,.04);
+    }
+
+    .btn {
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: white;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            border: none;
+        }
+
+    /* Responsive */
+    @@media (max-width: 1000px) {
+        .donut-wrap {
+            width: 240px;
+        }
+
+        .dash-grid {
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .insights-grid {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+
+    @@media (max-width: 640px) {
+        .dash-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .insights-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+    /* small helper */
+    .mini-title {
+        font-size: 1rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+    }
+
+    .mini-empty {
+        color: var(--muted);
+        font-weight: 700;
+        padding: 12px 0;
+    }
+</style>
+
+<div class="dash">
+    <div class="wrap">
+        <div class="dash-head">
+            <div class="title-row">
+                <div class="title-badge">📊</div>
+                <div>
+                    <h2 class="dash-title">Dashboard</h2>
+                    <p class="dash-subtitle">Streaks, missed days, and insights from your journal activity.</p>
+                </div>
+            </div>
+
+            <button class="ui-btn primary" @onclick="LoadAsync" type="button">
+                <span class="btn-ico">🔄</span>
+                Refresh
+            </button>
+        </div>
+
+        <div class="dash-grid">
+            <div class="stat card streak-card" style="grid-column: span 4;" @onclick="OpenCurrentStreakModal" title="Click to view current streak dates">
+                <div class="stat-label">🔥 Current streak</div>
+                <div class="stat-value">@CurrentStreak</div>
+                <div class="stat-foot">day(s) in a row</div>
+            </div>
+
+            <div class="stat card streak-card" style="grid-column: span 4;" @onclick="OpenLongestStreakModal" title="Click to view longest streak ranges">
+                <div class="stat-label">🏆 Longest streak</div>
+                <div class="stat-value">@LongestStreak</div>
+                <div class="stat-foot">day(s) record</div>
+            </div>
+
+            <div class="stat card missed-card" style="grid-column: span 4;" @onclick="OpenMissedModal" title="Click to view exact missed dates">
+                <div class="stat-label">⏳ Missed in range</div>
+                <div class="stat-value">@MissedDays.Count</div>
+                <div class="stat-foot">day(s) missed</div>
+            </div>
+        </div>
+
+        <div class="card section">
+            <div class="section-head" style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <h3 class="section-title">📈 Analytics & Insights</h3>
+                    <p class="section-subtitle">Mood patterns, popular tags, and writing trend.</p>
+                </div>
+
+                <div class="chip">💡 Insights</div>
+            </div>
+
+            <div class="insights-grid">
+                <!-- Pie + legend -->
+                <div class="chart-card" style="grid-column: span 4;">
+                    <div class="mini-title">😊 Mood Distribution</div>
+
+                    @if (MoodDist == null || MoodDist.Count == 0)
+                    {
+                        <div class="mini-empty">No mood data yet.</div>
+                    }
+                    else
+                    {
+                        <div class="donut-wrap" role="img" aria-label="Mood distribution pie chart">
+                            <svg viewBox="0 0 220 220" width="220" height="220" role="presentation" focusable="false">
+                                @foreach (var slice in GetPieSlices(MoodDist))
+                                {
+                                    <path d="@slice.Path" fill="@slice.Color" stroke="white" stroke-width="1"></path>
+                                }
+
+                                @((MarkupString)$"<text x=\"110\" y=\"115\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"800\" fill=\"var(--text)\">{MoodDist.Sum(kv => kv.Value)}</text>")
+                                @((MarkupString)$"<text x=\"110\" y=\"132\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--muted)\">entries</text>")
+                            </svg>
+
+                            <div class="donut-legend" aria-hidden="false">
+                                @foreach (var l in GetDonutLegend(MoodDist))
+                                {
+                                    <div class="legend-item"><span class="legend-swatch" style="background:@l.Color"></span> @l.Label (@l.Value)</div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Top tags bar chart -->
+                <div class="chart-card" style="grid-column: span 4;">
+                    <div class="mini-title">🏷️ Most Used Tags</div>
+
+                    @if (TopTags == null || TopTags.Count == 0)
+                    {
+                        <div class="mini-empty">No tags found yet.</div>
+                    }
+                    else
+                    {
+                        <svg class="bar-chart" viewBox="0 0 300 180" preserveAspectRatio="none" role="img" aria-label="Top tags">
+                            @{
+                                var bars = GetBarRects(TopTags, 300, 140, 10).ToList();
+                                foreach (var b in bars)
+                                {
+                                    <rect x="@b.X" y="@b.Y" width="@b.Width" height="@b.Height" rx="6" ry="6" fill="@b.Color"></rect>
+                                    @((MarkupString)$"<text x=\"{(b.X + b.Width / 2):F2}\" y=\"174\" text-anchor=\"middle\" font-size=\"10\" fill=\"var(--muted)\">{b.Label}</text>")
+                                    @((MarkupString)$"<text x=\"{(b.X + b.Width / 2):F2}\" y=\"{(b.Y - 6):F2}\" text-anchor=\"middle\" font-size=\"10\" fill=\"var(--text)\">{b.Value}</text>")
+                                }
+                            }
+                        </svg>
+                    }
+                </div>
+
+                <!-- Word count sparkline -->
+                <div class="chart-card" style="grid-column: span 4;">
+                    <div class="mini-title">✍️ Word Count Trend</div>
+
+                    @if (WordTrend == null || WordTrend.Count == 0)
+                    {
+                        <div class="mini-empty">No writing trend available yet.</div>
+                    }
+                    else
+                    {
+                        <svg class="sparkline" viewBox="0 0 400 80" preserveAspectRatio="none" role="img" aria-label="Word count trend">
+                            @{
+                                var pts = GetSparklinePoints(WordTrend, 400, 60, 10);
+                                if (!string.IsNullOrEmpty(pts.Points))
+                                {
+                                    <polyline points="@pts.Points" fill="none" stroke="@pts.Stroke" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+                                    if (!string.IsNullOrEmpty(pts.Area))
+                                    {
+                                        <path d="@pts.Area" fill="@pts.Fill" opacity="0.14"></path>
+                                    }
+                                }
+                            }
+                        </svg>
+
+                        <div style="margin-top:8px; display:flex; justify-content:space-between; color:var(--muted); font-weight:800;">
+                            <div>Avg: @((WordTrend.Count > 0) ? (int)WordTrend.Average(w => w.wordCount) : 0) words</div>
+                            <div>Points: @WordTrend.Count</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ShowMissedModal)
+{
+    <div class="modal-backdrop" @onclick="CloseMissedModal">
+        <div class="modal" @onclick:stopPropagation="true" role="dialog" aria-modal="true">
+            <h3>Missed days (@MissedDays.Count)</h3>
+            <p style="margin:6px 0;color:var(--muted)">These are the dates in the selected range where no journal entry exists.</p>
+
+            <div class="list">
+                @if (MissedDays == null || MissedDays.Count == 0)
+                {
+                    <div class="mini-empty">No missed days in the selected range.</div>
+                }
+                else
+                {
+                    @foreach (var d in MissedDays.OrderBy(d => d))
+                    {
+                        <div class="missed-item">
+                            <div>
+                                <div style="font-weight:900;">@d.ToString("yyyy-MM-dd")</div>
+                                <div style="color:var(--muted);font-weight:700">@d.ToString("dddd")</div>
+                            </div>
+
+                            <div style="display:flex;gap:8px;">
+                                <button class="btn" @onclick="() => CreateEntryForDate(d)">Add</button>
+                                <button class="btn primary" @onclick="() => OpenMissedDate(d)">View</button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+                <button class="btn" @onclick="CloseMissedModal">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowCurrentStreakModal)
+{
+    <div class="modal-backdrop" @onclick="CloseCurrentStreakModal">
+        <div class="modal" @onclick:stopPropagation="true" role="dialog" aria-modal="true">
+            <h3>Current streak (@CurrentStreak) — dates</h3>
+            <div class="list">
+                @if (CurrentStreakDates == null || CurrentStreakDates.Count == 0)
+                {
+                    <div class="mini-empty">No current streak.</div>
+                }
+                else
+                {
+                    @foreach (var d in CurrentStreakDates.OrderByDescending(d => d))
+                    {
+                        <div class="missed-item">
+                            <div>
+                                <div style="font-weight:900">@d.ToString("yyyy-MM-dd")</div>
+                                <div style="color:var(--muted);font-weight:700">@d.ToString("dddd")</div>
+                            </div>
+                            <div>
+                                <button class="btn primary" @onclick="() => OpenMissedDate(d)">View</button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+                <button class="btn" @onclick="CloseCurrentStreakModal">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowLongestStreakModal)
+{
+    <div class="modal-backdrop" @onclick="CloseLongestStreakModal">
+        <div class="modal" @onclick:stopPropagation="true" role="dialog" aria-modal="true">
+            <h3>Longest streak(s) — length @LongestStreak days</h3>
+            <div class="list">
+                @if (LongestStreakRanges == null || LongestStreakRanges.Count == 0)
+                {
+                    <div class="mini-empty">No streak ranges found.</div>
+                }
+                else
+                {
+                    @foreach (var r in LongestStreakRanges.OrderByDescending(r => r.Length))
+                    {
+                        <div class="missed-item">
+                            <div>
+                                <div style="font-weight:900">@r.Start.ToString("yyyy-MM-dd") — @r.End.ToString("yyyy-MM-dd")</div>
+                                <div style="color:var(--muted);font-weight:700">@r.Length day(s)</div>
+                            </div>
+                            <div>
+                                <button class="btn primary" @onclick="() => OpenMissedDate(r.Start)">View start</button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+                <button class="btn" @onclick="CloseLongestStreakModal">Close</button>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,229 @@
+﻿@page "/settings/security"
+@namespace JournalApp.Components.Pages.Auth
+@inject JournalApp.Services.Interfaces.IAuthService AuthService
+@inject JournalApp.Services.Implementations.SessionService Session
+@inject NavigationManager Nav
+
+<style>
+    /* 1. Use Theme Variables for Perfect Dark/Light visibility */
+    .sec-wrapper {
+        max-width: 480px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .sec-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 32px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        color: var(--text-main);
+    }
+
+    .sec-title {
+        font-size: 22px;
+        font-weight: 900;
+        margin: 0 0 8px 0;
+    }
+
+    .sec-sub {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+    }
+
+    /* Inputs that adapt to Dark Mode */
+    .field-group {
+        margin-bottom: 20px;
+    }
+
+        .field-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+    .ui-input {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--bg); /* Darker in dark mode, lighter in light mode */
+        color: var(--text-main);
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.2s;
+    }
+
+        .ui-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(8,145,178,0.1);
+        }
+
+    /* Action Buttons */
+    .btn-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .ui-btn {
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+        text-decoration: none;
+        text-align: center;
+    }
+
+        .ui-btn.primary {
+            background: var(--text-main);
+            color: var(--surface);
+        }
+
+        .ui-btn.secondary {
+            background: var(--border);
+            color: var(--text-main);
+        }
+
+        .ui-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+    /* Adaptive Feedback Messages */
+    .feedback {
+        margin-top: 20px;
+        padding: 14px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        border: 1px solid transparent;
+    }
+
+        /* Green for Success */
+        .feedback.ok {
+            background: #f0fdf4;
+            color: #166534;
+            border-color: #dcfce7;
+        }
+        /* Red for Error */
+        .feedback.err {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #fee2e2;
+        }
+
+    /* DARK MODE FIX FOR MESSAGES */
+    [data-theme='dark'] .feedback.ok {
+        background: #064e3b;
+        color: #34d399;
+        border-color: #065f46;
+    }
+
+    [data-theme='dark'] .feedback.err {
+        background: #450a0a;
+        color: #f87171;
+        border-color: #7f1d1d;
+    }
+</style>
+
+<div class="sec-wrapper">
+    <div class="sec-card">
+        <h3 class="sec-title">Security PIN</h3>
+        <p class="sec-sub">Update your 4-8 digit access code.</p>
+
+        @if (!Session.IsUnlocked)
+        {
+            <div class="feedback err">⚠️ App is locked. Unlock to change PIN.</div>
+            <div class="btn-stack">
+                <a href="/lock" class="ui-btn primary">Go to Unlock Page</a>
+            </div>
+        }
+        else
+        {
+            @* We use EditForm with FormName and method="post" for Static SSR *@
+            <EditForm Model="this" OnValidSubmit="SaveAsync" FormName="ChangePinForm" method="post">
+                <div class="field-group">
+                    <label>Current PIN</label>
+                    <InputText type="password" class="ui-input" @bind-Value="CurrentPin" maxlength="8" placeholder="••••" />
+                </div>
+
+                <div class="field-group">
+                    <label>New PIN</label>
+                    <InputText type="password" class="ui-input" @bind-Value="NewPin" maxlength="8" placeholder="••••" />
+                </div>
+
+                <div class="field-group">
+                    <label>Confirm New PIN</label>
+                    <InputText type="password" class="ui-input" @bind-Value="ConfirmPin" maxlength="8" placeholder="••••" />
+                </div>
+
+                <div class="btn-stack">
+                    <button type="submit" class="ui-btn primary">Update PIN</button>
+                    <a href="/settings" class="ui-btn secondary">Cancel</a>
+                </div>
+            </EditForm>
+
+            @if (!string.IsNullOrEmpty(Message))
+            {
+                <div class="feedback @(IsError ? "err" : "ok")">
+                    @(IsError ? "❌ " : "✅ ") @Message
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromForm] public string CurrentPin { get; set; } = "";
+    [SupplyParameterFromForm] public string NewPin { get; set; } = "";
+    [SupplyParameterFromForm] public string ConfirmPin { get; set; } = "";
+
+    private string Message = "";
+    private bool IsError = false;
+
+    private async Task SaveAsync()
+    {
+        // 1. Validation Logic
+        if (NewPin != ConfirmPin)
+        {
+            IsError = true; Message = "PINs do not match."; return;
+        }
+
+        if (NewPin.Length < 4)
+        {
+            IsError = true; Message = "PIN must be at least 4 digits."; return;
+        }
+
+        try
+        {
+            // 2. Verify Current
+            var verified = await AuthService.VerifyPinAsync(CurrentPin);
+            if (!verified)
+            {
+                IsError = true; Message = "Current PIN is incorrect."; return;
+            }
+
+            // 3. Update
+            await AuthService.SetPinAsync(NewPin);
+            Message = "PIN successfully updated!";
+            IsError = false;
+        }
+        catch (Exception ex)
+        {
+            IsError = true;
+            Message = "Error: " + ex.Message;
+        }
+    }
+}
